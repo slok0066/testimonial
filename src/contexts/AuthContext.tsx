@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         provider: 'google',
         options: {
           // Redirect directly to /dashboard after Google login
-        redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/dashboard` : '',
+        redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : '',
           scopes: 'email profile openid',
           queryParams: {
             access_type: 'offline',
