@@ -21,6 +21,18 @@ interface TestimonialCardProps {
   onUpdateStatus: (id: string, status: 'approved' | 'rejected') => void;
 }
 
+const getBadgeVariant = (status: Testimonial['status']) => {
+  switch (status) {
+    case 'approved':
+      return 'default';
+    case 'rejected':
+      return 'destructive';
+    case 'pending':
+    default:
+      return 'secondary';
+  }
+};
+
 export const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial: t, index, onUpdateStatus }) => {
   return (
     <motion.div
@@ -38,18 +50,18 @@ export const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimonial: t
                 <Star key={i} className={`h-5 w-5 ${i < t.rating ? 'text-yellow-400' : 'text-gray-300'}`} />
               ))}
             </div>
-            <Badge variant={t.status === 'approved' ? 'default' : t.status === 'rejected' ? 'destructive' : 'secondary'}>
+            <Badge variant={getBadgeVariant(t.status)}>
               {t.status}
             </Badge>
           </div>
         </CardHeader>
         <CardContent className="flex-grow">
-          <p className="font-semibold text-lg mb-2">{t.title || 'Untitled'}</p>
+          <p className="font-semibold text-lg mb-2">{t.title ?? 'Untitled'}</p>
           <p className="text-gray-600 text-sm italic">"{t.content}"</p>
         </CardContent>
         <CardFooter className="flex flex-col items-start gap-4">
           <p className="text-sm text-gray-500 w-full pt-4 border-t">
-            - {t.client_name} from {t.client_company || 'N/A'}
+            - {t.client_name} from {t.client_company ?? 'N/A'}
           </p>
           {t.status === 'pending' && (
             <motion.div

@@ -21,7 +21,7 @@ export const SettingsTab = () => {
         toast.error('Could not fetch user information.');
       } else if (data.user) {
         setUser(data.user);
-        setFullName(data.user.user_metadata?.full_name || '');
+        setFullName(data.user.user_metadata?.full_name ?? '');
       }
       setLoading(false);
     };

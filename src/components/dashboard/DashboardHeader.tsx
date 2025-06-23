@@ -19,7 +19,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user, onSignOu
           </div>
           <div className="flex items-center space-x-4">
             <p className="text-sm text-gray-600 hidden sm:block">
-              Welcome, {user?.user_metadata?.full_name || user?.email}
+              Welcome, {user?.user_metadata?.full_name ?? user?.email}
             </p>
             <Button variant="outline" size="sm" onClick={onSignOut}>
               <LogOut className="h-4 w-4 mr-2" />

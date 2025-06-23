@@ -51,8 +51,8 @@ export const EmbedTab = () => {
   const [borderRadius, setBorderRadius] = useState(8);
   const [cardShadow, setCardShadow] = useState('md');
   const [font, setFont] = useState('sans');
-  const [gap, setGap] = useState(16);
-  const [animationType, setAnimationType] = useState('fade');
+  const [gap] = useState(16);
+
   const [fontSize, setFontSize] = useState('md');
   const [fontWeight, setFontWeight] = useState('normal');
   const [cardPadding, setCardPadding] = useState('md');
@@ -337,7 +337,7 @@ export const EmbedTab = () => {
                         <Button 
                           variant="outline" 
                           size="sm" 
-                          onClick={() => navigator.clipboard.writeText(settings?.api_key || '')}
+                          onClick={() => navigator.clipboard.writeText(settings?.api_key ?? '')}
                           disabled={!settings?.api_key}
                         >
                           Copy
@@ -349,7 +349,7 @@ export const EmbedTab = () => {
                       <Input 
                         id="rate-limit" 
                         type="number" 
-                        value={settings?.rate_limit || 60} 
+                        value={settings?.rate_limit ?? 60} 
                         onChange={(e) => {
                           const newLimit = Number(e.target.value);
                           if (newLimit >= 1 && newLimit <= 1000) {
@@ -368,7 +368,7 @@ export const EmbedTab = () => {
                       <Input 
                         id="timeout" 
                         type="number" 
-                        value={settings?.timeout || 5000} 
+                        value={settings?.timeout ?? 5000} 
                         onChange={(e) => {
                           const newTimeout = Number(e.target.value);
                           if (newTimeout >= 1000 && newTimeout <= 30000) {
@@ -385,14 +385,14 @@ export const EmbedTab = () => {
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">Allowed IPs</Label>
                       <div className="space-y-2">
-                        {settings?.allowed_ips?.map((ip, index) => (
-                          <div key={index} className="flex items-center space-x-2">
+                        {settings?.allowed_ips?.map((ip) => (
+                          <div key={ip} className="flex items-center space-x-2">
                             <span className="text-sm">{ip}</span>
                             <Button 
                               variant="ghost" 
                               size="sm" 
                               onClick={() => {
-                                const newIps = settings?.allowed_ips?.filter((_, i) => i !== index) || [];
+                                const newIps = settings?.allowed_ips?.filter((currentIp) => currentIp !== ip) ?? [];
                                 supabase
                                   .from('user_settings')
                                   .update({ allowed_ips: newIps })
@@ -408,7 +408,7 @@ export const EmbedTab = () => {
                           onChange={(e) => {
                             const newIp = e.target.value;
                             if (newIp && settings?.allowed_ips?.indexOf(newIp) === -1) {
-                              const newIps = [...(settings?.allowed_ips || []), newIp];
+                              const newIps = [...(settings?.allowed_ips ?? []), newIp];
                               supabase
                                 .from('user_settings')
                                 .update({ allowed_ips: newIps })
@@ -421,14 +421,14 @@ export const EmbedTab = () => {
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">CORS Origins</Label>
                       <div className="space-y-2">
-                        {settings?.cors_origins?.map((origin, index) => (
-                          <div key={index} className="flex items-center space-x-2">
+                        {settings?.cors_origins?.map((origin) => (
+                          <div key={origin} className="flex items-center space-x-2">
                             <span className="text-sm">{origin}</span>
                             <Button 
                               variant="ghost" 
                               size="sm" 
                               onClick={() => {
-                                const newOrigins = settings?.cors_origins?.filter((_, i) => i !== index) || [];
+                                const newOrigins = settings?.cors_origins?.filter((currentOrigin) => currentOrigin !== origin) ?? [];
                                 supabase
                                   .from('user_settings')
                                   .update({ cors_origins: newOrigins })
@@ -444,7 +444,7 @@ export const EmbedTab = () => {
                           onChange={(e) => {
                             const newOrigin = e.target.value;
                             if (newOrigin && settings?.cors_origins?.indexOf(newOrigin) === -1) {
-                              const newOrigins = [...(settings?.cors_origins || []), newOrigin];
+                              const newOrigins = [...(settings?.cors_origins ?? []), newOrigin];
                               supabase
                                 .from('user_settings')
                                 .update({ cors_origins: newOrigins })

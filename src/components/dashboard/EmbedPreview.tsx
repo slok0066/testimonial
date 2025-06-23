@@ -22,13 +22,13 @@ const SampleTestimonial = ({ primaryColor, showStars, isDark, borderRadius, card
     lg: 'shadow-lg',
   };
 
-  const cardClasses = `p-4 ${isDark ? 'bg-gray-800 text-gray-200' : 'bg-gray-50 text-gray-800'} ${shadowVariants[cardShadow || 'md']}`;
+  const cardClasses = `p-4 ${isDark ? 'bg-gray-800 text-gray-200' : 'bg-gray-50 text-gray-800'} ${shadowVariants[cardShadow ?? 'md']}`;
 
   return (
     <div className={cardClasses} style={{ borderRadius: `${borderRadius}px` }}>
       {showStars && (
         <div className="flex items-center mb-2">
-          {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5" style={{ color: primaryColor }} fill="currentColor" />)}
+          {[...Array(5)].map((_, i) => <Star key={`star-preview-${i}`} className="h-5 w-5" style={{ color: primaryColor }} fill="currentColor" />)}
         </div>
       )}
       <h3 className={`font-bold text-lg mb-1 ${isDark ? 'text-white' : 'text-black'}`}>"A Game Changer!"</h3>
@@ -67,7 +67,7 @@ export const EmbedPreview: React.FC<EmbedPreviewProps> = ({
     serif: 'font-serif',
     mono: 'font-mono',
   };
-  const containerClass = `font-sans rounded-lg p-4 transition-colors duration-300 w-full ${isDark ? 'bg-gray-900' : 'bg-white'} ${fontVariants[font] || 'font-sans'}`;
+  const containerClass = `font-sans rounded-lg p-4 transition-colors duration-300 w-full ${isDark ? 'bg-gray-900' : 'bg-white'} ${fontVariants[font] ?? 'font-sans'}`;
 
   const renderContent = () => {
     switch (layout) {

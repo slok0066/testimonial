@@ -89,7 +89,7 @@ const Dashboard = () => {
       ]);
 
       if (testimonialsRes.error) throw testimonialsRes.error;
-      setTestimonials((testimonialsRes.data || []) as Testimonial[]);
+      setTestimonials((testimonialsRes.data ?? []) as Testimonial[]);
 
       if (settingsRes.error) throw settingsRes.error;
 

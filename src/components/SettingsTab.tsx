@@ -172,7 +172,7 @@ const SettingsTab = ({ userSettings, onSettingsUpdate }: SettingsTabProps) => {
         <CardContent>
           <Textarea
             placeholder="We'd love to hear about your experience! Your feedback helps us improve..."
-            value={settings.custom_message || ''}
+            value={settings.custom_message ?? ''}
             onChange={(e) => updateSetting('custom_message', e.target.value)}
             rows={4}
           />

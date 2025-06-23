@@ -42,9 +42,9 @@ const NewTestimonial = () => {
           throw new Error('Could not find the owner of this page. The link may be invalid or the owner account may have been deleted.');
         }
 
-        setOwner({ id: data.owner_id, name: data.owner_name || 'this business' });
+        setOwner({ id: data.owner_id, name: data.owner_name ?? 'this business' });
       } catch (err: any) {
-        setError(err.message || 'An unexpected error occurred.');
+        setError(err.message ?? 'An unexpected error occurred.');
       } finally {
         setLoading(false);
       }
@@ -77,7 +77,7 @@ const NewTestimonial = () => {
         setSubmitted(true);
         toast.success('Thank you for your feedback!');
     } catch (err: any) {
-        toast.error(err.message || 'Failed to submit testimonial.');
+        toast.error(err.message ?? 'Failed to submit testimonial.');
     }
   };
 
@@ -125,7 +125,7 @@ const NewTestimonial = () => {
                 <Card className="w-full max-w-lg shadow-2xl">
                     <CardHeader className="text-center">
                         <CardTitle className="text-3xl">Share Your Experience</CardTitle>
-                        <CardDescription>Your feedback helps {owner?.name || 'us'} grow.</CardDescription>
+                        <CardDescription>Your feedback helps {owner?.name ?? 'us'} grow.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-6">

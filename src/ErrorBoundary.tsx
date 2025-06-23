@@ -12,7 +12,7 @@ export class ErrorBoundary extends React.Component<{
   }
   render() {
     if (this.state.error) {
-      return <pre style={{ color: 'red', whiteSpace: 'pre-wrap' }}>{this.state.error.message || String(this.state.error)}</pre>;
+      return <pre style={{ color: 'red', whiteSpace: 'pre-wrap' }}>{this.state.error.message ?? String(this.state.error)}</pre>;
     }
     return this.props.children;
   }
