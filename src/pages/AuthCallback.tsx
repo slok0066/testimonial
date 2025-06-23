@@ -6,9 +6,22 @@ const AuthCallback = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Supabase automatically handles the hash and sets the session
-    // Redirect immediately to dashboard after login
-    navigate("/dashboard");
+    // Wait for Supabase session to be set before redirecting
+    let isMounted = true;
+    const checkSession = async () => {
+      for (let i = 0; i < 30; i++) { // wait up to 3 seconds
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session && isMounted) {
+          navigate("/dashboard");
+          return;
+        }
+        await new Promise(res => setTimeout(res, 100));
+      }
+      // fallback: still redirect after timeout
+      if (isMounted) navigate("/dashboard");
+    };
+    checkSession();
+    return () => { isMounted = false; };
   }, [navigate]);
 
   return (
