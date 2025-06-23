@@ -7,12 +7,8 @@ const AuthCallback = () => {
 
   useEffect(() => {
     // Supabase automatically handles the hash and sets the session
-    // Just wait a moment and redirect to dashboard (or wherever)
-    const timer = setTimeout(() => {
-      navigate("/dashboard"); // or your main page
-    }, 1000);
-
-    return () => clearTimeout(timer);
+    // Redirect immediately to dashboard after login
+    navigate("/dashboard");
   }, [navigate]);
 
   return (
