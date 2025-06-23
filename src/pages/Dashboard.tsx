@@ -44,7 +44,28 @@ interface UserSettings {
   collection_url_slug: string;
 }
 
+import { useLocation } from 'react-router-dom';
+
 const Dashboard = () => {
+  const location = useLocation();
+  // Wait for Supabase to process the OAuth hash if present
+  useEffect(() => {
+    if (window.location.hash.includes('access_token')) {
+      let isMounted = true;
+      const waitForSession = async () => {
+        for (let i = 0; i < 30; i++) {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session && isMounted) {
+            window.location.hash = '';
+            break;
+          }
+          await new Promise(res => setTimeout(res, 100));
+        }
+      };
+      waitForSession();
+      return () => { isMounted = false; };
+    }
+  }, [location]);
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
