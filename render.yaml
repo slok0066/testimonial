@@ -9,3 +9,6 @@ services:
     name: testimonial-heym
     buildCommand: npm install && npm run build
     staticPublishPath: dist
+    rewrites:
+      - source: /*
+        destination: /index.html

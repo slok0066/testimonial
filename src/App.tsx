@@ -1,16 +1,25 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext.tsx";
-import Index from "@/pages/Index.tsx";
-import Auth from "@/pages/Auth.tsx";
-import Dashboard from "@/pages/Dashboard.tsx";
-import NewTestimonial from '@/pages/NewTestimonial.tsx';
-import NotFound from "@/pages/NotFound.tsx";
-import AuthCallback from "@/pages/AuthCallback";
+
+// Lazy load page components for code-splitting
+const Index = lazy(() => import("@/pages/Index.tsx"));
+const Auth = lazy(() => import("@/pages/Auth.tsx"));
+const Dashboard = lazy(() => import("@/pages/Dashboard.tsx"));
+const NewTestimonial = lazy(() => import('@/pages/NewTestimonial.tsx'));
+const NotFound = lazy(() => import("@/pages/NotFound.tsx"));
 
 const queryClient = new QueryClient();
+
+// Loading spinner component for Suspense fallback
+const LoadingSpinner = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600"></div>
+  </div>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -18,13 +27,15 @@ const App = () => (
       <AuthProvider>
         <Toaster />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/collect/:slug" element={<NewTestimonial />} />
-            <Route path="/auth/callback" element={<AuthCallback />} />
-          </Routes>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/collect/:slug" element={<NewTestimonial />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
