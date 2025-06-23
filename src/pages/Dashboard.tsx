@@ -45,6 +45,16 @@ interface UserSettings {
 }
 
 const Dashboard = () => {
+  // Process Supabase OAuth hash if present
+  useEffect(() => {
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      supabase.auth.getSessionFromUrl().then(({ data, error }) => {
+        if (error) console.error('Error handling login:', error);
+        // Remove hash from URL
+        window.history.replaceState({}, document.title, '/dashboard');
+      });
+    }
+  }, []);
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
