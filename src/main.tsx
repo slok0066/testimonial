@@ -1,10 +1,11 @@
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import ErrorBoundary from './components/ErrorBoundary.tsx'
+import { createRoot } from 'react-dom/client';
 
-createRoot(document.getElementById("root")!).render(
-  <ErrorBoundary>
-    <App />
-  </ErrorBoundary>
-);
+const root = document.getElementById('root');
+
+if (root) {
+  createRoot(root).render(
+    <div style={{ padding: '20px', fontFamily: 'sans-serif', fontSize: '24px' }}>
+      Test Successful
+    </div>
+  );
+}
