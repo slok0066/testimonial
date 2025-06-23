@@ -52,8 +52,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          // Always redirect to /auth/callback, which will immediately send user to /dashboard
-        redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : '',
+          // Redirect directly to /dashboard after Google login, as requested by user
+        redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/dashboard` : '',
           scopes: 'email profile openid',
           queryParams: {
             access_type: 'offline',
