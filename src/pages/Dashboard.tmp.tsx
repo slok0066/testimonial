@@ -63,6 +63,27 @@ const Dashboard = () => {
     toast.success('Link copied to clipboard!');
   };
 
+  const renderCampaignsContent = () => {
+    if (isLoading) {
+      return <p>Loading campaigns...</p>;
+    }
+
+    if (campaigns && campaigns.length > 0) {
+      return (
+        <ul className="space-y-4">
+          {campaigns.map((campaign) => (
+            <li key={campaign.id} className="flex items-center justify-between p-4 border rounded-lg">
+              <span className="font-medium">{campaign.name}</span>
+              <Button variant="secondary" onClick={() => copyToClipboard(campaign.slug)}>Copy Link</Button>
+            </li>
+          ))}
+        </ul>
+      );
+    }
+
+    return <p className="text-center text-gray-500">No campaigns yet. Create one to get started!</p>;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm">
@@ -94,20 +115,7 @@ const Dashboard = () => {
             </Dialog>
           </CardHeader>
           <CardContent>
-            {isLoading ? (
-              <p>Loading campaigns...</p>
-            ) : campaigns && campaigns.length > 0 ? (
-              <ul className="space-y-4">
-                {campaigns.map((campaign) => (
-                  <li key={campaign.id} className="flex items-center justify-between p-4 border rounded-lg">
-                    <span className="font-medium">{campaign.name}</span>
-                    <Button variant="secondary" onClick={() => copyToClipboard(campaign.slug)}>Copy Link</Button>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-center text-gray-500">No campaigns yet. Create one to get started!</p>
-            )}
+            {renderCampaignsContent()}
           </CardContent>
         </Card>
       </main>

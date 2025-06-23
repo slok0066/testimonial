@@ -67,8 +67,8 @@ const Index = () => {
               ✨ Collect, Manage & Showcase Testimonials
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Turn Customer Love Into
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"> Business Growth</span>
+              Turn Customer Love Into{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Business Growth</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               The easiest way to collect, manage, and display customer testimonials. 

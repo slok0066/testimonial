@@ -23,6 +23,10 @@ const ToggleGroup = React.forwardRef<
   children,
   ...props
 }, ref) => {
+  if (!children) {
+    return null;
+  }
+
   const contextValue = React.useMemo(
     () => ({ variant, size }),
     [variant, size]

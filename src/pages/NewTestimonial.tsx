@@ -38,7 +38,7 @@ const NewTestimonial = () => {
           .rpc('get_owner_info_by_slug', { page_slug: slug })
           .single<{ owner_id: string; owner_name: string }>();
 
-        if (error || !data || !data.owner_id) {
+        if (error || !data?.owner_id) {
           throw new Error('Could not find the owner of this page. The link may be invalid or the owner account may have been deleted.');
         }
 

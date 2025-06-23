@@ -44,6 +44,13 @@ const Auth = () => {
     }
   };
 
+  const getButtonText = () => {
+    if (loading) {
+      return 'Processing...';
+    }
+    return isSignUp ? 'Sign Up' : 'Sign In';
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
        <div className="flex items-center space-x-4 mb-8">
@@ -73,7 +80,7 @@ const Auth = () => {
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Processing...' : (isSignUp ? 'Sign Up' : 'Sign In')}
+              {getButtonText()}
             </Button>
           </form>
 
