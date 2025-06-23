@@ -1,0 +1,12 @@
+# Render.com configuration for React + Vite SPA
+# Ensures correct build and start commands for static hosting
+
+services:
+  - type: web
+    name: testimonial-heym
+    env: static
+    staticPublishPath: dist
+    buildCommand: npm run build
+    
+# If you want to use a custom domain, set it in the Render dashboard.
+# This file ensures Render serves the built SPA from the dist directory.
