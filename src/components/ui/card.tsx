@@ -8,7 +8,7 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    role="region"
+    role="group"
     aria-roledescription="card"
     className={cn(
       "rounded-lg border bg-card text-card-foreground shadow-sm",
