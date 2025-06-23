@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://pxtfbraocebwpialcabv.supabase.co/auth/v1/callback',
+          redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : '',
           scopes: 'email profile openid',
           queryParams: {
             access_type: 'offline',
