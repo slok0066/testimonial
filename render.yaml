@@ -6,7 +6,7 @@
 
 services:
   - type: static
-    name: testimonial-heym
+    name: testimonial-nsn3
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     rewrites:
