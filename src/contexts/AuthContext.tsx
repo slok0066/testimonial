@@ -20,6 +20,36 @@ interface UserCredentials {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+/**
+ * A custom error class that extends Supabase's AuthError to represent a timeout.
+ * This is necessary to create a valid AuthError instance for our custom timeout logic.
+ */
+class TimeoutAuthError extends AuthError {
+  constructor(message: string) {
+    super(message);
+    this.name = 'TimeoutAuthError';
+    this.status = 408; // HTTP 408 Request Timeout
+  }
+}
+
+// Helper function to poll for session after OAuth. This is useful for popup-based
+// OAuth flows. For redirects, the onAuthStateChange listener is the primary
+// mechanism for session updates.
+const pollForSession = async (timeout = 15000, interval = 500): Promise<Session | null> => {
+  const startTime = Date.now();
+  while (Date.now() - startTime < timeout) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      return session;
+    }
+    // Wait for the specified interval before polling again
+    await new Promise(resolve => setTimeout(resolve, interval));
+  }
+  // If the loop completes without finding a session, it has timed out.
+  console.warn("Polling for session timed out.");
+  return null;
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -48,12 +78,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signInWithGoogle = async () => {
     try {
-      // Sign in with Supabase OAuth directly
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          // Redirect directly to /dashboard after Google login
-        redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : '',
+          redirectTo: typeof window !== 'undefined' ? `${window.location.origin}/` : '',
           scopes: 'email profile openid',
           queryParams: {
             access_type: 'offline',
@@ -62,32 +90,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       });
 
-      if (error) throw error;
+      if (oauthError) {
+        return { data: { user: null, session: null }, error: oauthError };
+      }
 
-      // Wait for the auth state to update
-      await new Promise((resolve) => {
-        const interval = setInterval(() => {
-          supabase.auth.getSession().then(({ data: { session } }) => {
-            if (session?.user) {
-              clearInterval(interval);
-              resolve(session);
-            }
-          });
-        }, 100);
-      });
+      const session = await pollForSession();
 
-      // Return the session data
-      const { data: { session } } = await supabase.auth.getSession();
-      return { 
-        data: { 
-          user: session?.user ?? null, 
-          session: session ?? null 
-        }, 
-        error: null 
+      if (!session) {
+        return { 
+          data: { user: null, session: null }, 
+          error: new TimeoutAuthError('Timed out waiting for user session.') 
+        };
+      }
+      
+      return {
+        data: {
+          user: session.user,
+          session,
+        },
+        error: null
       };
     } catch (error) {
       console.error('Error signing in with Google:', error);
-      throw error;
+      return { data: { user: null, session: null }, error: error as AuthError };
     }
   };
 
