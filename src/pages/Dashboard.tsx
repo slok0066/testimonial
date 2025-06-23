@@ -45,15 +45,17 @@ interface UserSettings {
 }
 
 const Dashboard = () => {
-  // Process Supabase OAuth hash if present
   useEffect(() => {
-    if (window.location.hash && window.location.hash.includes('access_token')) {
-      supabase.auth.getSessionFromUrl().then(({ data, error }) => {
-        if (error) console.error('Error handling login:', error);
-        // Remove hash from URL
+    // Always try to process the Supabase OAuth hash on mount
+    (supabase.auth as any).getSessionFromUrl().then(({ data, error }) => {
+      if (error) {
+        console.error('Supabase auth error:', error);
+      } else {
+        console.log('Session:', data.session);
+        // Clean up the URL to remove the access_token fragment
         window.history.replaceState({}, document.title, '/dashboard');
-      });
-    }
+      }
+    });
   }, []);
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
