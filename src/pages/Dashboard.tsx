@@ -45,17 +45,6 @@ interface UserSettings {
 }
 
 const Dashboard = () => {
-  // Handle Supabase OAuth token in URL on mount
-  useEffect(() => {
-    (supabase.auth as any).getSessionFromUrl().then(({ data, error }) => {
-      if (error) {
-        console.error('Supabase auth error:', error);
-      } else {
-        console.log('Session:', data.session);
-        window.history.replaceState({}, document.title, '/dashboard');
-      }
-    });
-  }, []);
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -278,12 +267,12 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           </TabsContent>
-          <TabsContent value="settings">
-            <SettingsTab />
-          </TabsContent>
-          <TabsContent value="embed">
-            <EmbedTab />
-          </TabsContent>
+                    <TabsContent value="settings">
+              <SettingsTab />
+            </TabsContent>
+            <TabsContent value="embed">
+              <EmbedTab />
+            </TabsContent>
         </Tabs>
       </main>
     </div>
