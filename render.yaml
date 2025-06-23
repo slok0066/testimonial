@@ -5,10 +5,12 @@
 # Ensures correct build and publish commands for static hosting
 
 services:
-  - type: static
+  - type: web
     name: testimonial-heym
+    env: node
+    plan: free # Ensure you're on the free plan
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
-    rewrites:
-      - source: /*
-        destination: /index.html
+    startCommand: npx serve -s dist
+    envVars:
+      - key: NODE_VERSION
+        value: 20 # Specify a recent Node.js version
