@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext.tsx";
+import { Analytics } from "@vercel/analytics/react";
 
 // Lazy load page components for code-splitting
 const Index = lazy(() => import("@/pages/Index.tsx"));
@@ -26,6 +27,7 @@ const App = () => (
     <TooltipProvider>
       <AuthProvider>
         <Toaster />
+        <Analytics />
         <BrowserRouter>
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
