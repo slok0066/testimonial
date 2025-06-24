@@ -110,25 +110,28 @@ const NewTestimonial = () => {
         <AnimatePresence mode="wait">
         {submitted ? (
             <motion.div key="thank-you" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }}>
-                <Card className="w-full max-w-lg text-center shadow-2xl">
+                <Card className="w-full max-w-lg text-center shadow-2xl bg-white rounded-xl">
                     <CardHeader>
                         <motion.div initial={{ scale: 0 }} animate={{ scale: 1, rotate: 360 }} transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.2 }}>
                             <Star className="h-20 w-20 text-yellow-400 mx-auto" fill="currentColor" />
                         </motion.div>
-                        <CardTitle className="text-3xl mt-4">Thank You!</CardTitle>
-                        <CardDescription className="text-lg">Your feedback is invaluable to us.</CardDescription>
+                        <CardTitle className="text-4xl font-bold mt-4 text-gray-800">Thank You!</CardTitle>
+                        <CardDescription className="text-lg text-gray-600 mt-2">Your feedback has been successfully submitted.</CardDescription>
                     </CardHeader>
                 </Card>
             </motion.div>
         ) : (
             <motion.div key="form" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
-                <Card className="w-full max-w-lg shadow-2xl">
-                    <CardHeader className="text-center">
+                <Card className="w-full max-w-2xl shadow-2xl rounded-2xl">
+                    <CardHeader className="text-center p-8">
+                        <div className="mx-auto bg-blue-100 rounded-full p-3 w-fit mb-4">
+                            <Star className="h-8 w-8 text-blue-600" />
+                        </div>
                         <CardTitle className="text-3xl">Share Your Experience</CardTitle>
                         <CardDescription>Your feedback helps {owner?.name ?? 'us'} grow.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-6 p-2">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="name">Full Name</Label>
@@ -148,7 +151,7 @@ const NewTestimonial = () => {
                                 <div className="flex items-center space-x-1">
                                     {[...Array(5)].map((_, i) => (
                                         <Star key={i} 
-                                            className={`h-8 w-8 cursor-pointer transition-colors ${ (hoverRating || rating) > i ? 'text-yellow-400' : 'text-gray-300'}`}
+                                            className={`h-10 w-10 cursor-pointer transition-all duration-200 ease-in-out ${ (hoverRating || rating) > i ? 'text-yellow-400 scale-110' : 'text-gray-300'}`} 
                                             onMouseEnter={() => setHoverRating(i + 1)}
                                             onMouseLeave={() => setHoverRating(0)}
                                             onClick={() => setRating(i + 1)}
@@ -164,7 +167,7 @@ const NewTestimonial = () => {
                                 <Label htmlFor="content">Your Testimonial</Label>
                                 <Textarea id="content" value={content} onChange={e => setContent(e.target.value)} required rows={5} placeholder="Tell us about your experience..." />
                             </div>
-                            <Button type="submit" className="w-full text-lg py-6" disabled={loading}>
+                            <Button type="submit" className="w-full text-lg py-6 transition-transform transform hover:scale-105" disabled={loading}>
                                 <Send className="h-5 w-5 mr-2" />
                                 Submit Testimonial
                             </Button>
