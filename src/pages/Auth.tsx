@@ -58,7 +58,7 @@ const Auth = () => {
           <h1 className="text-4xl font-bold text-gray-800">TestimonialHub</h1>
         </div>
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <Card className="w-full max-w-md shadow-lg">
+        <Card className="w-full max-w-lg shadow-lg">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">{isSignUp ? 'Create an Account' : 'Welcome Back!'}</CardTitle>
             <CardDescription>{isSignUp ? 'Enter your details to get started.' : 'Sign in to manage your testimonials.'}</CardDescription>
