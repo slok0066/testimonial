@@ -1,8 +1,16 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "testimania",
+  "description": "A powerful testimonial collection and management platform",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "keywords": ["testimonials", "feedback", "customer-reviews", "react", "typescript", "supabase"],
+  "author": "Testimania Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/slok0066/testimonial.git"
+  },
+  "homepage": "https://github.com/slok0066/testimonial#readme",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
