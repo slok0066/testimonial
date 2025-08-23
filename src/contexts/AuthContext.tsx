@@ -57,15 +57,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
+      try {
+        console.debug('[Auth] fetching existing session...');
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+        setUser(session?.user ?? null);
+      } catch (err) {
+        console.error('[Auth] getSession error:', err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     getSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.debug('[Auth] auth state changed:', _event, Boolean(session?.user));
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -179,7 +186,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signUp,
   }), [session, user, loading, signOut, signInWithGoogle, signInWithEmail, signUp]);
 
-  return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;
+  if (loading) {
+    // Minimal, inline loading UI to avoid blank screen
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontFamily: 'system-ui, sans-serif', color: '#374151' }}>Loading…</div>
+      </div>
+    );
+  }
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
