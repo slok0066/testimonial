@@ -14,6 +14,7 @@ import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
 import { CollectionURLCard } from '@/components/dashboard/CollectionURLCard';
 import { StatsGrid } from '@/components/dashboard/StatsGrid';
 import { TestimonialCard } from '@/components/dashboard/TestimonialCard';
+import ProductHuntBadge from '@/components/ProductHuntBadge';
 
 interface Testimonial {
   id: string;
@@ -165,7 +166,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gray-50">
       <DashboardHeader user={user} onSignOut={signOut} />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <CollectionURLCard collectionUrlSlug={userSettings.collection_url_slug} />
         
         <StatsGrid stats={stats} />

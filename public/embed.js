@@ -20,8 +20,8 @@
     };
     if (!config.slug) return console.error('Testimania: data-slug is missing.');
     
-    // Base URL for API requests - points to the same origin as the script
-    const apiBaseUrl = window.location.origin;
+    // Base URL for API requests - use same origin server API for security
+    const apiBaseUrl = `${window.location.origin}/api`;
 
     const widgetContainer = document.getElementById('testimania-widget');
     if (!widgetContainer) return console.error('Testimania: Widget container div not found.');
@@ -77,7 +77,7 @@
     // --- Logic ---
     async function loadTestimonials() {
         try {
-            const res = await fetch(`${apiBaseUrl}/api/testimonials?slug=${encodeURIComponent(config.slug)}`);
+            const res = await fetch(`${apiBaseUrl}/testimonials?slug=${encodeURIComponent(config.slug)}`);
             if (!res.ok) throw new Error(`Fetch failed: ${res.statusText}`);
             let testimonials = await res.json();
             if (config.layout === 'single') testimonials = testimonials.slice(0, 1);

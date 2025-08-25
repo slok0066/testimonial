@@ -1,0 +1,4 @@
+https://example.com/
+https://example.com/auth
+https://example.com/dashboard
+https://example.com/collect/demo

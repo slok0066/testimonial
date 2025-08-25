@@ -15,6 +15,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import ProductHuntBadge from "@/components/ProductHuntBadge";
 import { useNavigate } from "react-router-dom";
 
 const Index = () => {
@@ -30,16 +31,26 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      {/* Header */}
-      <header className="relative overflow-hidden">
+    <div className="min-h-screen w-full relative">
+      {/* Radial Gradient Background */}
+      <div
+        className="fixed inset-0 z-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(125% 125% at 50% 10%, #fff 40%, #6366f1 100%)",
+        }}
+      />
+  {/* Header */}
+  <header className="relative overflow-hidden z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <Star className="h-8 w-8 text-yellow-500 fill-current" />
-              <span className="text-2xl font-bold text-gray-900">TestimonialHub</span>
+              <span className="text-2xl font-bold text-gray-900">Testimonial Hub</span>
             </div>
             <div className="flex items-center space-x-4">
+              <div className="scale-90 sm:scale-100">
+                <ProductHuntBadge />
+              </div>
               {user ? (
                 <Button onClick={() => navigate('/dashboard')}>
                   Go to Dashboard
@@ -60,7 +71,7 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+  <section className="relative py-20 overflow-hidden z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <Badge className="mb-6 bg-blue-100 text-blue-800 hover:bg-blue-200">
@@ -88,7 +99,7 @@ const Index = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-20 bg-white">
+  <section className="py-20 z-10 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -182,7 +193,7 @@ const Index = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-gray-50">
+  <section className="py-20 z-10 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -228,7 +239,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+  <section className="py-20 z-10 relative">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Start Collecting Testimonials?
@@ -248,7 +259,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+  <footer className="bg-gray-900 text-white py-12 z-10 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
@@ -256,7 +267,7 @@ const Index = () => {
               <span className="text-xl font-bold">TestimonialHub</span>
             </div>
             <div className="text-gray-400">
-              © 2024 TestimonialHub. Built with ❤️ for growing businesses.
+              © 2024 Testimonial Hub. Built with ❤️ for growing businesses.
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { LogOut, Star } from 'lucide-react';
 import { User } from '@supabase/supabase-js';
+import ProductHuntBadge from '@/components/ProductHuntBadge';
 
 interface DashboardHeaderProps {
   user: User | null;
@@ -15,9 +16,12 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user, onSignOu
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center space-x-4">
             <Star className="h-8 w-8 text-yellow-400" />
-            <h1 className="text-2xl font-bold text-gray-800">TestimonialHub</h1>
+            <h1 className="text-2xl font-bold text-gray-800">Testimonial Hub</h1>
           </div>
           <div className="flex items-center space-x-4">
+            <div className="scale-90 md:scale-100">
+              <ProductHuntBadge />
+            </div>
             <p className="text-sm text-gray-600 hidden sm:block">
               Welcome, {user?.user_metadata?.full_name ?? user?.email}
             </p>
